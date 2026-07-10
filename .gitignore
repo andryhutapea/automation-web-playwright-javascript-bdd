@@ -1,0 +1,21 @@
+# Node
+node_modules/
+
+# Playwright / playwright-bdd artifacts
+.features-gen/
+reports/
+blob-report/
+playwright/.cache/
+
+# Playwright MCP exploration artifacts
+.playwright-mcp/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store

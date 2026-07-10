@@ -1,0 +1,21 @@
+{
+  "name": "automation-web-playwright-javascript",
+  "version": "1.0.0",
+  "description": "BDD automation tests (Playwright + playwright-bdd) for the SauceDemo (https://www.saucedemo.com/) site. The reference test cases live in TEST_CASES.md.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "playwright test < /dev/null",
+    "test:headed": "playwright test --headed < /dev/null",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report reports/html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "playwright-bdd": "^9.2.0"
+  }
+}
