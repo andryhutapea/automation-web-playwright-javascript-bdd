@@ -46,12 +46,14 @@ npx playwright install chromium
 ## Running the tests
 
 ```bash
-npx playwright test                       # headless
-npx playwright test --headed              # visible browser
-npx playwright test --ui                  # Playwright UI mode (interactive runner)
+npm test                                   # headless (recommended - auto-runs bddgen first, see note below)
+npm run test:headed                       # visible browser
+npm run test:ui                           # Playwright UI mode (interactive runner)
 npx playwright test tests/features/login.feature   # a single feature only
 npx playwright test -g "checkout"         # filter by scenario/test title
 ```
+
+> **Note:** `npm test`/`npm run test:headed`/`npm run test:ui` always work standalone — each auto-runs `bddgen` first via a matching `pretest*` npm script. If you call `npx playwright test ...` **directly** (like the last two commands above, or the `--grep` examples below) instead of through one of the `npm run` scripts, run `npx bddgen` once beforehand (and again any time a `.feature` file changes) — otherwise Playwright reports `Error: No tests found`, since the actual runnable specs live in the gitignored `.features-gen/` folder that playwright-bdd generates from your `.feature` files.
 
 ### Running by tag (ID / Feature / Product)
 
