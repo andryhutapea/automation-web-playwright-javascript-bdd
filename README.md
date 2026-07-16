@@ -9,6 +9,7 @@ This is a Playwright + JavaScript reimplementation of the [automation-web-seleni
 ```
 config.js                  # base URL & user data
 playwright.config.js
+global-setup.js             # auto-runs bddgen before every test run (see "Running the tests" below)
 reporters/
   local-report-server.reporter.js   # prints a clickable URL to the last HTML report after every run
   report-server.js                    # the static file server it spawns (detached, reused across runs)
@@ -46,14 +47,14 @@ npx playwright install chromium
 ## Running the tests
 
 ```bash
-npm test                                   # headless (recommended - auto-runs bddgen first, see note below)
+npm test                                   # headless, all scenarios
 npm run test:headed                       # visible browser
 npm run test:ui                           # Playwright UI mode (interactive runner)
 npx playwright test tests/features/login.feature   # a single feature only
 npx playwright test -g "checkout"         # filter by scenario/test title
 ```
 
-> **Note:** `npm test`/`npm run test:headed`/`npm run test:ui` always work standalone — each auto-runs `bddgen` first via a matching `pretest*` npm script. If you call `npx playwright test ...` **directly** (like the last two commands above, or the `--grep` examples below) instead of through one of the `npm run` scripts, run `npx bddgen` once beforehand (and again any time a `.feature` file changes) — otherwise Playwright reports `Error: No tests found`, since the actual runnable specs live in the gitignored `.features-gen/` folder that playwright-bdd generates from your `.feature` files.
+playwright-bdd needs a build step (`bddgen`) to turn `.feature` files into runnable specs before Playwright can find them. That step runs automatically via `globalSetup` in `playwright.config.js` — no matter how you invoke it (`npm test`, bare `npx playwright test`, with `--grep`, ...), it's always regenerated fresh first. There's no separate command to remember.
 
 ### Running by tag (ID / Feature / Product)
 
@@ -107,7 +108,7 @@ This retries a failing test up to 2 times before reporting it as failed, same in
 No Allure setup is needed here — Playwright's built-in HTML reporter and trace viewer cover the same ground. Both the HTML report and failure artifacts (screenshots/traces) are consolidated under a single `reports/` folder (`outputDir` and the `html` reporter's `outputFolder` are both pointed there in `playwright.config.js`):
 
 ```bash
-npx playwright test              # generates reports/html/ and reports/test-results/ automatically
+npm test              # generates reports/html/ and reports/test-results/ automatically
 ```
 
 A custom reporter (`reporters/local-report-server.reporter.js`) prints a clickable link to the report at the end of every run — no separate `show-report` step needed:

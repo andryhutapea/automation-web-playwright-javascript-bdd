@@ -9,6 +9,7 @@ const testDir = defineBddConfig({
 
 module.exports = defineConfig({
   testDir,
+  globalSetup: require.resolve('./global-setup.js'),
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   reporter: [

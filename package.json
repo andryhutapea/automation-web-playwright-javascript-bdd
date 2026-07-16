@@ -5,11 +5,8 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "pretest": "bddgen",
     "test": "playwright test < /dev/null",
-    "pretest:headed": "bddgen",
     "test:headed": "playwright test --headed < /dev/null",
-    "pretest:ui": "bddgen",
     "test:ui": "playwright test --ui",
     "report": "playwright show-report reports/html"
   },
